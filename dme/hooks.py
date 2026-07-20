@@ -247,3 +247,4 @@ app_license = "mit"
 # List of apps whose translatable strings should be excluded from this app's translations.
 # ignore_translatable_strings_from = []
 
+fixtures = [{'dt': 'Role', 'filters': [['name', 'in', ['Super Admin', 'Pengasuh', 'Pengurus', 'Wali Santri', 'Santri', 'Ustadz']]]}, {'dt': 'Module Def', 'filters': [['app_name', '=', 'dme']]}]
