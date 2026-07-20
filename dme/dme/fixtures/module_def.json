@@ -1,0 +1,62 @@
+[
+ {
+  "_assign": null,
+  "_comments": null,
+  "_liked_by": null,
+  "_user_tags": null,
+  "app_name": "dme",
+  "custom": 0,
+  "docstatus": 0,
+  "doctype": "Module Def",
+  "modified": "2026-07-20 11:12:45.881031",
+  "module_name": "DMe",
+  "name": "DMe",
+  "package": null,
+  "restrict_to_domain": null
+ },
+ {
+  "_assign": null,
+  "_comments": null,
+  "_liked_by": null,
+  "_user_tags": null,
+  "app_name": "dme",
+  "custom": 0,
+  "docstatus": 0,
+  "doctype": "Module Def",
+  "modified": "2026-07-20 11:13:57.693684",
+  "module_name": "DMe Kesantrian",
+  "name": "DMe Kesantrian",
+  "package": null,
+  "restrict_to_domain": null
+ },
+ {
+  "_assign": null,
+  "_comments": null,
+  "_liked_by": null,
+  "_user_tags": null,
+  "app_name": "dme",
+  "custom": 0,
+  "docstatus": 0,
+  "doctype": "Module Def",
+  "modified": "2026-07-20 11:13:59.156859",
+  "module_name": "DMe Akademik",
+  "name": "DMe Akademik",
+  "package": null,
+  "restrict_to_domain": null
+ },
+ {
+  "_assign": null,
+  "_comments": null,
+  "_liked_by": null,
+  "_user_tags": null,
+  "app_name": "dme",
+  "custom": 0,
+  "docstatus": 0,
+  "doctype": "Module Def",
+  "modified": "2026-07-20 11:14:00.212724",
+  "module_name": "DMe Keuangan",
+  "name": "DMe Keuangan",
+  "package": null,
+  "restrict_to_domain": null
+ }
+]

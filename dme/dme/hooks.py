@@ -248,4 +248,3 @@ app_license = "mit"
 # ignore_translatable_strings_from = []
 
 fixtures = [{'dt': 'Role', 'filters': [['name', 'in', ['Super Admin', 'Pengasuh', 'Pengurus', 'Wali Santri', 'Santri', 'Ustadz']]]}, {'dt': 'Module Def', 'filters': [['app_name', '=', 'dme']]}]
-fixtures.append({'dt': 'DocType', 'filters': [['name', 'in', ['Wali Santri', 'Santri']]]})
