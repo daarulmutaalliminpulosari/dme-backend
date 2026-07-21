@@ -371,8 +371,9 @@ def submit_pendaftaran(data):
     if isinstance(data, str):
         data = json.loads(data)
         
-    if not frappe.db.exists("Student Admission", "PPDB 2025-2026"):
-        frappe.throw("Periode PPDB belum dikonfigurasi. Hubungi Admin.")
+    active_admission = frappe.db.get_value("Student Admission", {"publish": 1}, "name")
+    if not active_admission:
+        frappe.throw("Periode PPDB belum dikonfigurasi atau belum dibuka. Hubungi Admin.")
 
     required = ["first_name", "student_email_id", "program", "no_hp_wali", "nama_wali_pendaftar"]
     for f in required:
@@ -386,7 +387,7 @@ def submit_pendaftaran(data):
         "last_name": data.get("last_name"),
         "student_email_id": data.get("student_email_id"),
         "program": data.get("program"),
-        "student_admission": "PPDB 2025-2026",
+        "student_admission": active_admission,
         "application_status": "Applied",
         "gender": "Male" if data.get("jenis_kelamin") == "Laki-laki" else "Female",
         "date_of_birth": data.get("tanggal_lahir"),
