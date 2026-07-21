@@ -354,7 +354,7 @@ def get_profil_santri(student_name):
 @frappe.whitelist(allow_guest=True)
 def get_ppdb_info():
     """GET current active PPDB period info."""
-    active_admission = frappe.db.get_all("Student Admission", filters={"publish": 1}, fields=["name", "admission_title", "academic_year", "route", "introduction"], limit=1)
+    active_admission = frappe.db.get_all("Student Admission", filters={"academic_year": "2025-2026"}, fields=["name", "admission_title", "academic_year", "route", "introduction"], limit=1)
     if not active_admission:
         return {"status": "error", "message": "Tidak ada periode pendaftaran yang aktif saat ini."}
         
@@ -371,7 +371,7 @@ def submit_pendaftaran(data):
     if isinstance(data, str):
         data = json.loads(data)
         
-    active_admission = frappe.db.get_value("Student Admission", {"publish": 1}, "name")
+    active_admission = frappe.db.get_value("Student Admission", {"academic_year": "2025-2026"}, "name")
     if not active_admission:
         frappe.throw("Periode PPDB belum dikonfigurasi atau belum dibuka. Hubungi Admin.")
 
