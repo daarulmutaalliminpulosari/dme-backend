@@ -348,6 +348,75 @@ def get_profil_santri(student_name):
 
 
 # ─────────────────────────────────────────────
+# PPDB ENDPOINTS
+# ─────────────────────────────────────────────
+
+@frappe.whitelist(allow_guest=True)
+def get_ppdb_info():
+    """GET current active PPDB period info."""
+    active_admission = frappe.db.get_all("Student Admission", filters={"publish": 1}, fields=["name", "admission_title", "academic_year", "route", "introduction"], limit=1)
+    if not active_admission:
+        return {"status": "error", "message": "Tidak ada periode pendaftaran yang aktif saat ini."}
+        
+    return {"status": "success", "data": active_admission[0]}
+
+
+@frappe.whitelist(allow_guest=True, methods=["POST"])
+def submit_pendaftaran(data):
+    """
+    POST: Submit a new Student Applicant.
+    Required fields: first_name, student_email_id, program
+    Custom fields required: no_hp_wali, nama_wali_pendaftar
+    """
+    if isinstance(data, str):
+        data = json.loads(data)
+        
+    if not frappe.db.exists("Student Admission", "PPDB 2025-2026"):
+        frappe.throw("Periode PPDB belum dikonfigurasi. Hubungi Admin.")
+
+    required = ["first_name", "student_email_id", "program", "no_hp_wali", "nama_wali_pendaftar"]
+    for f in required:
+        if not data.get(f):
+            frappe.throw(f"Field '{f}' wajib diisi.")
+
+    # Create Applicant
+    applicant = frappe.get_doc({
+        "doctype": "Student Applicant",
+        "first_name": data.get("first_name"),
+        "last_name": data.get("last_name"),
+        "student_email_id": data.get("student_email_id"),
+        "program": data.get("program"),
+        "student_admission": "PPDB 2025-2026",
+        "application_status": "Applied",
+        "gender": "Male" if data.get("jenis_kelamin") == "Laki-laki" else "Female",
+        "date_of_birth": data.get("tanggal_lahir"),
+        # Custom Fields for PPDB
+        "no_hp_wali": data.get("no_hp_wali"),
+        "nama_wali_pendaftar": data.get("nama_wali_pendaftar"),
+    })
+    
+    applicant.insert(ignore_permissions=True)
+    frappe.db.commit()
+    
+    return {
+        "status": "success", 
+        "message": "Pendaftaran berhasil disubmit. Silakan pantau status pendaftaran Anda.",
+        "data": {"applicant_id": applicant.name}
+    }
+
+
+@frappe.whitelist(allow_guest=True)
+def cek_status_ppdb(applicant_id):
+    """GET status of Student Applicant by ID."""
+    if not frappe.db.exists("Student Applicant", applicant_id):
+        return {"status": "error", "message": "ID Pendaftaran tidak ditemukan."}
+        
+    applicant = frappe.db.get_value("Student Applicant", applicant_id, 
+        ["name", "first_name", "last_name", "application_status", "program"], as_dict=True)
+        
+    return {"status": "success", "data": applicant}
+
+# ─────────────────────────────────────────────
 # PING (Health Check)
 # ─────────────────────────────────────────────
 
